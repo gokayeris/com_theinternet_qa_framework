@@ -1,0 +1,20 @@
+# Entorno Virtual
+venv/
+.venv/
+env/
+
+# Python (archivos compilados)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Pytest y Reportes
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+
+# IDEs y editores
+.vscode/
+.idea/
