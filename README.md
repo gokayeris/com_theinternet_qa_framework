@@ -35,6 +35,8 @@ com_theinternet_qa_framework/
 │   └── test_login.py             # Executable test scripts for the automated flow
 │
 └── allure-results/               # Raw results generated after test runs (JSON, videos, images)
+```
+---
 
 ## 🛠️ Tech Stack & Dependencies
 - **Python 3**
@@ -43,7 +45,6 @@ com_theinternet_qa_framework/
 - **Allure Report** (Interactive dashboards and execution analytics)
 - **Python-dotenv** (Environment variables management)
 
----
 
 ## 🔧 Initial Setup
 
