@@ -9,7 +9,8 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    # 🌟 Forzamos Ubuntu 22.04 para evitar el bug de dependencias del sistema operativo
+    runs-on: ubuntu-22.04
 
     steps:
     - name: Checkout repository
@@ -25,11 +26,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    # Instala automáticamente Chromium, Firefox y WebKit con sus dependencias nativas
-    - name: Install Playwright Browsers
-      uses: microsoft/playwright-github-action@v1
+    # Instala los 3 navegadores (Chromium, Firefox y WebKit) con sus dependencias en una versión de OS compatible
+    - name: Install Playwright Browsers & Deps
+      run: python -m playwright install --with-deps
 
-    # Ejecuta Pytest pasándole los tres navegadores en paralelo
+    # Corre tus tests pasando los 3 navegadores en paralelo
     - name: Run Pytest Tests
       env:
         BASE_URL: https://the-internet.herokuapp.com
