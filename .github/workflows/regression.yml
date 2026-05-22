@@ -10,11 +10,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
-    # Le indica a GitHub que corra TODOS los comandos adentro de tu carpeta de proyecto
-    defaults:
-      run:
-        working-directory: com_theinternet_qa_framework
 
     steps:
     - name: Checkout repository
@@ -34,4 +29,9 @@ jobs:
       run: playwright install --with-deps
 
     - name: Run Pytest Tests
+      # Acá le pasamos las variables simuladas que tu framework espera leer del entorno
+      env:
+        BASE_URL: https://the-internet.herokuapp.com
+        # Si tenés usuarios o contraseñas en tu .env local, agregalas acá abajo de la misma forma:
+        # DB_USER: mi_usuario
       run: pytest --alluredir=allure-results
