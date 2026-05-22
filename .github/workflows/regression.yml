@@ -25,11 +25,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    # Este comando instala Chromium y descarga automáticamente las dependencias que le falten a Linux
-    - name: Install Playwright Browser and Deps
-      run: python -m playwright install chromium --with-deps
+    # Instala automáticamente Chromium, Firefox y WebKit con sus dependencias nativas
+    - name: Install Playwright Browsers
+      uses: microsoft/playwright-github-action@v1
 
+    # Ejecuta Pytest pasándole los tres navegadores en paralelo
     - name: Run Pytest Tests
       env:
         BASE_URL: https://the-internet.herokuapp.com
-      run: pytest
+      run: pytest --browser chromium --browser firefox --browser webkit
