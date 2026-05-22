@@ -28,8 +28,8 @@ jobs:
     - name: Install Playwright Browsers & Deps
       run: python -m playwright install --with-deps
 
-    # Corre tus tests en los 3 navegadores y genera la carpeta de reportes Allure
     - name: Run Pytest Tests
       env:
         BASE_URL: https://the-internet.herokuapp.com
-      run: pytest --browser chromium --browser firefox --browser webkit --alluredir=allure-results
+      # Dejamos que pytest lea tu pytest.ini y corra de forma limpia generando el reporte Allure
+      run: pytest --alluredir=allure-results
