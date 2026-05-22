@@ -31,4 +31,4 @@ jobs:
     - name: Run Pytest Tests
       env:
         BASE_URL: https://the-internet.herokuapp.com
-      run: pytest --alluredir=allure-results
+      run: pytest
