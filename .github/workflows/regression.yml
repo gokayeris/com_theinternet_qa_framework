@@ -25,14 +25,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    # Actualiza el sistema operativo e instala las dependencias de manera segura
-    - name: Ensure system dependencies for Playwright
-      run: |
-        sudo apt-get update
-        python -m playwright install system-deps
-
-    - name: Install Playwright Browsers
-      run: python -m playwright install chromium
+    # Este comando instala Chromium y descarga automáticamente las dependencias que le falten a Linux
+    - name: Install Playwright Browser and Deps
+      run: python -m playwright install chromium --with-deps
 
     - name: Run Pytest Tests
       env:
