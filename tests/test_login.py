@@ -1,26 +1,22 @@
+"""Pruebas funcionales de extremo a extremo para el módulo de Login."""
+
 from pages.login_page import LoginPage
 
-def test_successful_login(page, user_lifecycle):
-    # 1. Instanciamos la página de Login pasándole el objeto 'page' de Playwright
+def test_successful_login(page):
+    """Verifica que un usuario con credenciales válidas pueda iniciar sesión."""
+    # 1. Inicializamos la página de Login
     login_page = LoginPage(page)
-    
-    # 2. Navegamos a la pantalla de Login usando el método del POM
+
+    # 2. Navegamos a la URL de login
     login_page.navigate()
-    
-    # 3. Extraemos el usuario y contraseña dinámicos que creó nuestro fixture de API
-    username = user_lifecycle["username"]
-    password = user_lifecycle["password"]
-    
-    print(f"\n[TEST - UI] Intentando loguear con: {username}")
-    
-    # 4. Como 'The Internet' solo acepta "tomsmith" y "SuperSecretPassword!",
-    # si usamos los datos aleatorios de la API va a fallar el login (lo cual es correcto).
-    # Para ver el flujo completado con éxito por ahora, podés probar con los datos de arriba,
-    # o mandar los dinámicos para validar el comportamiento del cartel de error.
-    
-    # Probemos con los dinámicos para ver cómo interactúa:
-    login_page.login(username, password)
-    
-    # 5. Asertamos que la pantalla muestre que el usuario es inválido (porque no existe en este frontend estático)
-    assert "is invalid" in login_page.flash_message.text_content()
-    print("[TEST - UI] Validación de mensaje de error completada con éxito.")
+
+    # 3. Ejecutamos la acción de login con credenciales válidas
+    login_page.login("tomsmith", "SuperSecretPassword!")
+
+    # 4. Obtenemos el texto del mensaje de alerta (flash message)
+    flash_text = login_page.get_flash_message_text()
+
+    # 5. Validamos que el login haya sido exitoso chequeando el texto esperado
+    expected = "You logged into a secure area!"
+    msg_err = f"Login fallido o mensaje incorrecto. Se obtuvo: '{flash_text}'"
+    assert expected in flash_text, msg_err
