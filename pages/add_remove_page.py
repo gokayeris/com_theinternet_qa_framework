@@ -1,37 +1,33 @@
-"""Page Object que representa la funcionalidad de agregar y quitar elementos."""
+"""Módulo para la página de Add/Remove Elements."""
 
+import allure
 from playwright.sync_api import Page
-from config import Config
-from utils.common_actions import CommonActions
+
 
 class AddRemovePage:
-    """Clase con los selectores y lógica para interactuar con Add/Remove Elements."""
+    """Clase para interactuar con la página de Add/Remove."""
 
     def __init__(self, page: Page):
         self.page = page
-        self.actions = CommonActions(page)
+        self.add_button = "text=Add Element"
+        self.delete_button = ".added-manually"
 
-        # Construimos la URL usando tu Config
-        self.url = f"{Config.BASE_URL_UI}/add_remove_elements/"
+    @allure.step("Agregar un elemento")
+    def add_element(self):
+        """Hace clic en el botón para agregar un nuevo elemento."""
+        self.page.click(self.add_button)
 
-        # Selectores en formato String
-        self.add_button_selector = "button >> text=Add Element"
-        self.delete_buttons_selector = "button.added-manually"
+    @allure.step("Eliminar un elemento")
+    def delete_element(self):
+        """Hace clic en el botón para eliminar un elemento."""
+        self.page.click(self.delete_button)
 
+    @allure.step("Verificar si el botón de eliminar es visible")
+    def is_delete_button_visible(self):
+        """Retorna True si el botón de eliminar está visible, False en caso contrario."""
+        return self.page.is_visible(self.delete_button)
+
+    @allure.step("Navegar a la página")
     def navigate(self):
-        """Navega a la página de agregar y quitar elementos."""
-        self.actions.navigate(self.url)
-
-    def click_add_element(self):
-        """Hace clic en el botón para añadir un elemento nuevo."""
-        self.actions.click(self.add_button_selector)
-
-    def click_delete_element_at(self, index: int = 0):
-        """Hace clic en un botón de eliminar específico según su índice."""
-        locator = self.page.locator(self.delete_buttons_selector)
-        if locator.count() > index:
-            locator.nth(index).click()
-
-    def get_delete_buttons_count(self) -> int:
-        """Cuenta la cantidad de botones de eliminación visibles en la interfaz."""
-        return self.page.locator(self.delete_buttons_selector).count()
+        """Navega a la URL de la página de Add/Remove Elements."""
+        self.page.goto("https://the-internet.herokuapp.com/add_remove_elements/")

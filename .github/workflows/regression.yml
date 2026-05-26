@@ -33,3 +33,11 @@ jobs:
         BASE_URL: https://the-internet.herokuapp.com
       # Dejamos que pytest lea tu pytest.ini y corra de forma limpia generando el reporte Allure
       run: pytest --alluredir=allure-results
+
+    - name: Upload Allure Report
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: allure-results
+        path: allure-results
+        retention-days: 7
